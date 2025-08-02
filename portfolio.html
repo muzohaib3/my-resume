@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Muhammad Zohaib Hassan, Android and Mobile App Developer">
+  <title>Muhammad Zohaib Hassan - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/framer-motion@10/dist/framer-motion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Check Framer Motion availability
+    console.log('Framer Motion:', window.framerMotion);
+    const { motion } = window.framerMotion || {};
+
+    // Fallback components if Framer Motion is unavailable
+    const MotionDiv = motion ? motion.div : 'div';
+    const MotionH1 = motion ? motion.h1 : 'h1';
+    const MotionH2 = motion ? motion.h2 : 'h2';
+    const MotionButton = motion ? motion.button : 'button';
+
+    const Navbar = () => (
+      <MotionDiv
+        className="fixed top-0 w-full bg-gray-900 text-white p-4 shadow-lg z-10"
+        initial={motion ? { y: -100 } : {}}
+        animate={motion ? { y: 0 } : {}}
+        transition={motion ? { duration: 0.5, ease: "easeOut" } : {}}
+      >
+        <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-xl font-bold">Muhammad Zohaib Hassan</h1>
+          <ul className="flex space-x-6">
+            {['About', 'Experience', 'Projects', 'Skills', 'Contact'].map((item, index) => (
+              <MotionDiv
+                key={item}
+                initial={motion ? { opacity: 0, y: 20 } : {}}
+                animate={motion ? { opacity: 1, y: 0 } : {}}
+                transition={motion ? { delay: index * 0.1, duration: 0.3 } : {}}
+              >
+                <a href={`#${item.toLowerCase()}`} className="hover:text-blue-400 transition">
+                  {item}
+                </a>
+              </MotionDiv>
+            ))}
+          </ul>
+        </div>
+      </MotionDiv>
+    );
+
+    const Hero = () => {
+      useEffect(() => {
+        if (window.Typed) {
+          new window.Typed('#typed', {
+            strings: ['Android Developer', 'Mobile App Developer', 'Tech Enthusiast'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true,
+          });
+        }
+      }, []);
+
+      return (
+        <MotionDiv
+          className="relative h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white overflow-hidden"
+          initial={motion ? { opacity: 0 } : {}}
+          animate={motion ? { opacity: 1 } : {}}
+          transition={motion ? { duration: 1 } : {}}
+        >
+          <MotionDiv
+            className="absolute inset-0 bg-[url('https://source.unsplash.com/random/1920x1080?tech')] bg-cover bg-center opacity-20"
+            style={motion ? { y: 0 } : {}}
+            animate={motion ? { y: [0, -50, 0] } : {}}
+            transition={motion ? { duration: 10, repeat: Infinity, ease: "linear" } : {}}
+          />
+          <div className="text-center z-10">
+            <MotionH1
+              className="text-5xl md:text-6xl font-bold mb-4"
+              initial={motion ? { scale: 0.8, opacity: 0 } : {}}
+              animate={motion ? { scale: 1, opacity: 1 } : {}}
+              transition={motion ? { duration: 0.8, ease: "easeOut" } : {}}
+            >
+              Muhammad Zohaib Hassan
+            </MotionH1>
+            <h2 className="text-2xl md:text-3xl">
+              I'm a <span id="typed" className="font-semibold text-yellow-300"></span>
+            </h2>
+            <MotionButton
+              className="mt-6 bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-100 transition"
+              whileHover={motion ? { scale: 1.1, rotate: 5 } : {}}
+              whileTap={motion ? { scale: 0.9 } : {}}
+            >
+              <a href="#contact">Get in Touch</a>
+            </MotionButton>
+          </div>
+        </MotionDiv>
+      );
+    };
+
+    const Section = ({ id, title, children }) => (
+      <section id={id} className="py-16 px-4 bg-gray-100">
+        <div className="container mx-auto">
+          <MotionH2
+            className="text-3xl font-bold text-gray-800 mb-6"
+            initial={motion ? { opacity: 0, y: 20 } : {}}
+            whileInView={motion ? { opacity: 1, y: 0 } : {}}
+            transition={motion ? { duration: 0.5 } : {}}
+          >
+            {title}
+          </MotionH2>
+          {children}
+        </div>
+      </section>
+    );
+
+    const ExperienceCard = ({ role, company, period, tasks }) => (
+      <MotionDiv
+        className="bg-white p-6 rounded-lg shadow-md mb-4 hover:shadow-xl transition-shadow"
+        initial={motion ? { opacity: 0, x: -20 } : {}}
+        whileInView={motion ? { opacity: 1, x: 0 } : {}}
+        transition={motion ? { duration: 0.5, delay: 0.2 } : {}}
+        whileHover={motion ? { scale: 1.02 } : {}}
+      >
+        <h3 className="text-xl font-semibold text-blue-600">{role}</h3>
+        <p className="text-gray-600">{company} | {period}</p>
+        <ul className="list-disc pl-5 mt-2 text-gray-700">
+          {tasks.map((task, index) => (
+            <MotionDiv
+              key={index}
+              initial={motion ? { opacity: 0, x: -10 } : {}}
+              whileInView={motion ? { opacity: 1, x: 0 } : {}}
+              transition={motion ? { duration: 0.3, delay: index * 0.1 } : {}}
+            >
+              <li>{task}</li>
+            </MotionDiv>
+          ))}
+        </ul>
+      </MotionDiv>
+    );
+
+    const ProjectCard = ({ name, date, description }) => (
+      <MotionDiv
+        className="bg-white p-6 rounded-lg shadow-md mb-4 hover:shadow-xl transition-shadow"
+        initial={motion ? { opacity: 0, x: 20 } : {}}
+        whileInView={motion ? { opacity: 1, x: 0 } : {}}
+        transition={motion ? { duration: 0.5, delay: 0.2 } : {}}
+        whileHover={motion ? { scale: 1.02, rotate: 2 } : {}}
+      >
+        <h3 className="text-xl font-semibold text-blue-600">{name}</h3>
+        <p className="text-gray-600">{date}</p>
+        <p className="text-gray-700 mt-2">{description}</p>
+      </MotionDiv>
+    );
+
+    const App = () => {
+      const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        alert('Form submitted! (Note: Email functionality requires EmailJS integration)');
+      };
+
+      return (
+        <div className="min-h-screen">
+          <Hero />
+          <Navbar />
+          <Section id="about" title="About Me">
+            <MotionDiv
+              initial={motion ? { opacity: 0, y: 20 } : {}}
+              whileInView={motion ? { opacity: 1, y: 0 } : {}}
+              transition={motion ? { duration: 0.5 } : {}}
+            >
+              <p className="text-gray-700">
+                Experienced Android Developer with expertise in developing scalable mobile applications. Strong background in Android, Java, Android Jetpack, MVVM, and performance optimization. Proficient in Kotlin and Java for front-end development, with a passion for creating intuitive designs. Dedicated to problem-solving, system design, and staying updated with emerging technologies.
+              </p>
+            </MotionDiv>
+          </Section>
+
+          <Section id="experience" title="Professional Experience">
+            {[
+              {
+                role: "Senior Android Developer",
+                company: "The Citizens Foundation",
+                period: "Sep 2023 - Present",
+                tasks: [
+                  "Spearheaded the development and maintenance of multiple Android applications.",
+                  "Optimized app performance and integrated cutting-edge Android technologies.",
+                  "Led feature development with a strong focus on user experience and reliability."
+                ]
+              },
+              {
+                role: "Android Developer",
+                company: "Bank Alfalah",
+                period: "May 2025 - Jun 2025",
+                tasks: [
+                  "Contributed to the development of mobile banking applications for Android.",
+                  "Collaborated with cross-functional teams to enhance app functionality and security.",
+                  "Implemented features using Kotlin and integrated with banking APIs."
+                ]
+              },
+              {
+                role: "Android Developer",
+                company: "Bosch Pharmaceuticals",
+                period: "Apr 2022 - May 2023",
+                tasks: [
+                  "Built and enhanced Android applications, ensuring robustness and scalability.",
+                  "Integrated RESTful APIs and Firebase services for seamless backend communication.",
+                  "Conducted rigorous testing with Espresso and Mockito for reliability."
+                ]
+              },
+              {
+                role: "Junior Android Developer",
+                company: "Evolution Wing",
+                period: "Aug 2021 - Mar 2022",
+                tasks: [
+                  "Developed and maintained Android applications using Kotlin and Java.",
+                  "Implemented MVVM architecture and third-party libraries for enhanced functionality."
+                ]
+              }
+            ].map((exp, index) => (
+              <ExperienceCard key={index} {...exp} />
+            ))}
+          </Section>
+
+          <Section id="projects" title="Projects">
+            {[
+              {
+                name: "Orio OMS (Android)",
+                date: "Jan 2023",
+                description: "Developed an optimized order management system with intuitive UI and offline support."
+              },
+              {
+                name: "BlueEx Consumer (Flutter)",
+                date: "Sep 2024",
+                description: "Developed a logistics and parcel tracking app with cross-platform support."
+              },
+              {
+                name: "Bosch Pharma - Inventory System",
+                date: "Jul 2022",
+                description: "Designed and implemented a real-time warehouse inventory tracking system."
+              },
+              {
+                name: "Bosch Pharma WMS",
+                date: "",
+                description: "Designed and developed a warehouse management system to streamline inventory tracking and order fulfillment."
+              },
+              {
+                name: "TCF - School Manager (SMA)",
+                date: "",
+                description: "Developed a comprehensive school management platform for teachers, students, and administrators to manage academic activities."
+              }
+            ].map((project, index) => (
+              <ProjectCard key={index} {...project} />
+            ))}
+          </Section>
+
+          <Section id="skills" title="Technical Skills">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                { category: "Languages", items: "Java, Kotlin, Dart, XML, JavaScript" },
+                { category: "Frameworks", items: "Android SDK, Android Jetpack, React.js, Vue.js" },
+                { category: "Architecture", items: "MVVM, SOLID Principles" },
+                { category: "Libraries", items: "Retrofit, OkHttp, Dagger 2, Glide, GSON, Firebase, Crashlytics" },
+                { category: "Tools", items: "Android Studio, Git, Firebase, REST APIs, CI/CD" },
+                { category: "Other", items: "Coroutines, Google Maps, Memory Management" }
+              ].map((skill, index) => (
+                <MotionDiv
+                  key={index}
+                  className="text-gray-700"
+                  initial={motion ? { opacity: 0, scale: 0.9 } : {}}
+                  whileInView={motion ? { opacity: 1, scale: 1 } : {}}
+                  transition={motion ? { duration: 0.3, delay: index * 0.1 } : {}}
+                >
+                  <span className="font-semibold">{skill.category}:</span> {skill.items}
+                </MotionDiv>
+              ))}
+            </ul>
+          </Section>
+
+          <Section id="contact" title="Contact">
+            <MotionDiv
+              initial={motion ? { opacity: 0, y: 20 } : {}}
+              whileInView={motion ? { opacity: 1, y: 0 } : {}}
+              transition={motion ? { duration: 0.5 } : {}}
+            >
+              <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-semibold mb-2" htmlFor="name">Name</label>
+                  <MotionDiv whileHover={motion ? { scale: 1.02 } : {}}>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-600"
+                      required
+                    />
+                  </MotionDiv>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-semibold mb-2" htmlFor="email">Email</label>
+                  <MotionDiv whileHover={motion ? { scale: 1.02 } : {}}>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-600"
+                      required
+                    />
+                  </MotionDiv>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-semibold mb-2" htmlFor="message">Message</label>
+                  <MotionDiv whileHover={motion ? { scale: 1.02 } : {}}>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-600"
+                      rows="4"
+                      required
+                    ></textarea>
+                  </MotionDiv>
+                </div>
+                <MotionButton
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                  whileHover={motion ? { scale: 1.1, rotate: 5 } : {}}
+                  whileTap={motion ? { scale: 0.9 } : {}}
+                >
+                  Send Message
+                </MotionButton>
+              </form>
+              <div className="mt-4 text-center">
+                <p className="text-gray-700">
+                  <a href="mailto:m.zohaibhassan01@gmail.com" className="text-blue-600 hover:underline">m.zohaibhassan01@gmail.com</a> | 
+                  <a href="https://github.com/muzohaib3" className="text-blue-600 hover:underline ml-2">GitHub</a> | 
+                  <a href="https://linkedin.com/in/mzohaib01" className="text-blue-600 hover:underline ml-2">LinkedIn</a>
+                </p>
+              </div>
+            </MotionDiv>
+          </Section>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
